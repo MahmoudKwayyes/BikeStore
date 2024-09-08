@@ -1,0 +1,18 @@
+﻿@using Core.Entities
+
+
+
+<nav aria-label="...">
+    <ul class="pagination">
+        <li class="@(  ((TableQuery)ViewBag.Filtered).PageNumber == 1 ? "page-item disabled" : "page-item")">
+            <a id="Prev" class="page-link" href="#" tabindex="-1" onclick='PrevPage("@ViewBag.url")' aria-disabled="true">السابق</a>
+            </li>
+        <li class="@( ((TableQuery)ViewBag.Filtered).PagesCount == ((TableQuery)ViewBag.Filtered).PageNumber ? " page-item disabled" : "page-item" )">
+            <a id="Next" class="page-link " href="#" onclick='NextPage("@ViewBag.url")'>التالي</a>
+        </li>
+    </ul>
+</nav>
+<p style="color:#0d6efd">
+    الصفحة  @(((TableQuery)ViewBag.Filtered).PageNumber) من @(((TableQuery)ViewBag.Filtered).PagesCount)
+</p>
+

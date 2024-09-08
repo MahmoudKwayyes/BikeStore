@@ -1,0 +1,661 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Infrastructure
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Bikes Store</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/limonte-sweetalert2/sweetalert2.css" />
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+        .text-dark {
+            color: white !important;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .active {
+            color: black !important;
+            background-color: white;
+            border-radius: 10%;
+        }
+
+        #footer {
+            background-color: #efefef;
+            flex: 0 0 50px; /*or just height:50px;*/
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>-->
+@* @if (SignInManager.IsSignedIn(User))
+    {*@
+
+@* }*@
+
+<!--<div class="container-fluid overflow-hidden">
+    <div class="row vh-100 overflow-auto">
+        <div class="col-12 col-sm-3 col-xl-2 px-sm-2 px-0 bg-dark d-flex sticky-top">
+            <div class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-3 pt-2 text-white">
+                <br />
+                <a href="/" class="d-flex align-items-center pb-sm-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+                    </svg>
+                    <span class="fs-5">-B<span class="d-none d-sm-inline">ike Store</span></span>
+                </a>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <ul class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start" id="menu">
+                        <li class="nav-item">
+                            <a id="brand" class="nav-link text-dark" asp-area="" asp-controller="brand" asp-action="Index">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bicycle" viewBox="0 0 16 16">
+                                    <path d="M4 4.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1v.5h4.14l.386-1.158A.5.5 0 0 1 11 4h1a.5.5 0 0 1 0 1h-.64l-.311.935.807 1.29a3 3 0 1 1-.848.53l-.508-.812-2.076 3.322A.5.5 0 0 1 8 10.5H5.959a3 3 0 1 1-1.815-3.274L5 5.856V5h-.5a.5.5 0 0 1-.5-.5zm1.5 2.443-.508.814c.5.444.85 1.054.967 1.743h1.139L5.5 6.943zM8 9.057 9.598 6.5H6.402L8 9.057zM4.937 9.5a1.997 1.997 0 0 0-.487-.877l-.548.877h1.035zM3.603 8.092A2 2 0 1 0 4.937 10.5H3a.5.5 0 0 1-.424-.765l1.027-1.643zm7.947.53a2 2 0 1 0 .848-.53l1.026 1.643a.5.5 0 1 1-.848.53L11.55 8.623z" />
+                                </svg>
+                                <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Brands</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="category" class="nav-link text-dark" asp-area="" asp-controller="category" asp-action="Index">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box" viewBox="0 0 16 16">
+                                    <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
+                                </svg>
+                                <i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">Category</span>
+                            </a>
+                        </li>
+                        <li>
+
+                            <a id="Customer" class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="Index">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566ZM9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z" />
+                                </svg>
+                                <i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline">Customers</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a id="staff" class="nav-link text-dark" asp-area="" asp-controller="staff" asp-action="Index">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-person-fill" viewBox="0 0 16 16">
+                                    <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 4c2.623 0 4.146.826 5 1.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1.245C3.854 11.825 5.377 11 8 11z" />
+                                </svg>
+                                <i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">Staff</span>
+                            </a>
+
+                        </li>
+                        <li>
+                            <a id="Stock" class="nav-link text-dark" asp-area="" asp-controller="Stock" asp-action="index">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
+                                    <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3L2.95.4ZM7.5 1H3.75L1.5 4h6V1Zm1 0v3h6l-2.25-3H8.5ZM15 5H1v10h14V5Z" />
+                                </svg>
+                                <i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">Stocks</span>
+                            </a>
+
+                        </li>
+                        <li>
+                            <a id="Order" class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="index">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-minecart-loaded" viewBox="0 0 16 16">
+                                    <path d="M4 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm8-1a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM.115 3.18A.5.5 0 0 1 .5 3h15a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 14 12H2a.5.5 0 0 1-.491-.408l-1.5-8a.5.5 0 0 1 .106-.411zm.987.82 1.313 7h11.17l1.313-7H1.102z" />
+                                    <path fill-rule="evenodd" d="M6 1a2.498 2.498 0 0 1 4 0c.818 0 1.545.394 2 1 .67 0 1.552.57 2 1h-2c-.314 0-.611-.15-.8-.4-.274-.365-.71-.6-1.2-.6-.314 0-.611-.15-.8-.4a1.497 1.497 0 0 0-2.4 0c-.189.25-.486.4-.8.4-.507 0-.955.251-1.228.638-.09.13-.194.25-.308.362H3c.13-.147.401-.432.562-.545a1.63 1.63 0 0 0 .393-.393A2.498 2.498 0 0 1 6 1z" />
+                                </svg>
+                                <i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">Orders</span>
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a id="store" class="nav-link text-dark" id="store" asp-area="" asp-controller="store" asp-action="Index">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
+                                    <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
+                                </svg>
+                                <i class="fs-5 bi-grid"></i><span class="ms-1 d-none d-sm-inline">Stores</span>
+                            </a>
+                        </li>
+                        <li>
+
+                            <a id="product" class="nav-link text-dark" asp-area="" asp-controller="product" asp-action="Index">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-layout-wtf" viewBox="0 0 16 16">
+                                    <path d="M5 1v8H1V1h4zM1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm13 2v5H9V2h5zM9 1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9zM5 13v2H3v-2h2zm-2-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3zm12-1v2H9v-2h6zm-6-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H9z" />
+                                </svg>
+                                <i class="fs-5 bi-people"></i><span class="ms-1 d-none d-sm-inline">Products</span>
+                            </a>
+                        </li>
+
+
+                    </ul>
+                }
+                <div class="dropdown py-sm-4 mt-sm-auto ms-auto ms-sm-0 flex-shrink-1">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="~/image/profile.jpg" alt="hugenerd" width="28" height="28" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1">Joe</span>
+                    </a>
+                    <partial name="_LoginPartial" />-->
+                @* <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li>
+                        <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul>*@
+<!--</div>
+
+
+                </div>
+            </div>
+            <div class="col d-flex flex-column h-sm-100">
+                <main class="row overflow-auto">
+                    <div class="col pt-4">
+                        RenderBody()
+                    </div>
+                </main>
+                <footer class="row bg-light py-4 mt-auto">
+                    <div class="col">
+                        <br />
+                        &copy; 2022 - Bikes Store - <a style="text-decoration:none" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        $(function () {
+            var url = window.location.pathname.split("/");
+            //alert(url[1]);
+            $('#topheader .navbar-nav').find('li.active').removeClass('active');
+            $("#" + url[1]).parent('li').addClass('active');
+            $("#" + url[1]).addClass('active');
+        });
+
+    </script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/limonte-sweetalert2/sweetalert2.all.min.js"></script>
+
+    <script src="~/js/dataTable.js" asp-append-version="true"></script>
+
+    await RenderSectionAsync("Scripts", required: false)
+</body>
+
+
+</html>-->
+@*-----------------------------------------------------------------------------------------------------------------------------------------*@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    @*<title>Bootstrap Gallery - Venus Admin Template</title>*@
+    <title>@ViewData["Title"] - Bikes Store</title>
+
+    <!-- Meta -->
+    <meta name="description" content="Marketplace for Bootstrap Admin Dashboards" />
+    <meta name="author" content="Bootstrap Gallery" />
+    <link rel="shortcut icon" href="~/assets/images/favicon.svg" />
+
+    <!-- *************
+            ************ CSS Files *************
+        ************* -->
+    <link rel="stylesheet" href="~/assets/fonts/bootstrap/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/assets/css/main.css" />
+
+    <!-- *************
+            ************ Vendor Css Files *************
+        ************ -->
+    <!-- Scrollbar CSS -->
+    <link rel="stylesheet" href="~/assets/vendor/overlay-scroll/OverlayScrollbars.min.css" />
+
+    <!--Others-->
+    @*<link rel="stylesheet" href="~/css/site.css" />*@
+    <link rel="stylesheet" href="~/limonte-sweetalert2/sweetalert2.css" />
+    <link rel="icon" href="~/favicon.ico" type="image/x-icon" />
+
+    @*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">*@
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</head>
+
+<body dir="rtl">
+    <!-- Page wrapper start -->
+    <div class="page-wrapper">
+
+        <!-- Main container start -->
+        <div class="main-container">
+
+            <!-- Sidebar wrapper start -->
+            <nav id="sidebar" class="sidebar-wrapper">
+
+                <!-- App brand starts -->
+                <div class="app-brand p-4">
+                    <a href="index.html">
+                        <img src="~/assets/images/logo.svg" class="logo" alt="Bootstrap Gallery" />
+                    </a>
+                </div>
+                <!-- App brand ends -->
+                <!-- Sidebar profile actions starts -->
+                <ul class="profile-actions d-lg-flex d-none">
+                    <li>
+                        <a href="settings.html" data-bs-toggle="tooltip" data-bs-placement="top"
+                           data-bs-custom-class="custom-tooltip-success" data-bs-title="Settings">
+                            <i class="bi bi-gear fs-4"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html" data-bs-toggle="tooltip" data-bs-placement="top"
+                           data-bs-custom-class="custom-tooltip-success" data-bs-title="Profile">
+                            <i class="bi bi-person-square fs-4"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="events.html" data-bs-toggle="tooltip" data-bs-placement="top"
+                           data-bs-custom-class="custom-tooltip-success" data-bs-title="Notifications">
+                            <i class="bi bi-bell fs-4"></i>
+                            <span class="count-label"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           data-bs-custom-class="custom-tooltip-warning" data-bs-title="Skype">
+                            <i class="bi bi-skype fs-4"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           data-bs-custom-class="custom-tooltip-danger" data-bs-title="Dribbble">
+                            <i class="bi bi-dribbble fs-4"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           data-bs-custom-class="custom-tooltip-info" data-bs-title="Twitter">
+                            <i class="bi bi-twitter fs-4"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Sidebar profile actions ends -->
+                <!-- Sidebar menu starts -->
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <div class="sidebarMenuScroll">
+                        <ul class="sidebar-menu">
+                            <li>
+                                <a id="dashboard" class="nav-link" asp-area="" asp-controller="Dashboard" asp-action="Index">
+                                    <i class="bi bi-pie-chart"></i>
+                                    <span class="menu-text">لوحة القيادة</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a id="brand" class="nav-link " asp-area="" asp-controller="brand" asp-action="Index">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bicycle" viewBox="0 0 16 16">
+                                        <path d="M4 4.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1v.5h4.14l.386-1.158A.5.5 0 0 1 11 4h1a.5.5 0 0 1 0 1h-.64l-.311.935.807 1.29a3 3 0 1 1-.848.53l-.508-.812-2.076 3.322A.5.5 0 0 1 8 10.5H5.959a3 3 0 1 1-1.815-3.274L5 5.856V5h-.5a.5.5 0 0 1-.5-.5zm1.5 2.443-.508.814c.5.444.85 1.054.967 1.743h1.139L5.5 6.943zM8 9.057 9.598 6.5H6.402L8 9.057zM4.937 9.5a1.997 1.997 0 0 0-.487-.877l-.548.877h1.035zM3.603 8.092A2 2 0 1 0 4.937 10.5H3a.5.5 0 0 1-.424-.765l1.027-1.643zm7.947.53a2 2 0 1 0 .848-.53l1.026 1.643a.5.5 0 1 1-.848.53L11.55 8.623z" />
+                                    </svg>
+                                    <span class="me-4">العلامات التجارية</span>
+                                    @*<i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">العلامات التجارية</span>*@
+                                </a>
+                            </li>
+                            <li>
+                                <a id="category" class="nav-link " asp-area="" asp-controller="category" asp-action="Index">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box" viewBox="0 0 16 16">
+                                        <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
+                                    </svg>
+                                    @*<i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">الأصناف</span>*@
+                                    <span class="me-4">الأصناف</span>
+                                </a>
+                            </li>
+                            <li>
+
+                                <a id="Customer" class="nav-link " asp-area="" asp-controller="Customer" asp-action="Index">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566ZM9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4Zm13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z" />
+                                    </svg>
+                                    @*<i class="fs-5 bi-table"></i><span class="ms-1 d-none d-sm-inline">العملاء</span>*@
+                                    <span class="me-4">العملاء</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a id="staff" class="nav-link " asp-area="" asp-controller="staff" asp-action="Index">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-file-person-fill" viewBox="0 0 16 16">
+                                        <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 4c2.623 0 4.146.826 5 1.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1.245C3.854 11.825 5.377 11 8 11z" />
+                                    </svg>
+                                    @*<i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">طاقم العمل</span>*@
+                                    <span class="me-4">طاقم العمل</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a id="Stock" class="nav-link " asp-area="" asp-controller="Stock" asp-action="index">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box2" viewBox="0 0 16 16">
+                                        <path d="M2.95.4a1 1 0 0 1 .8-.4h8.5a1 1 0 0 1 .8.4l2.85 3.8a.5.5 0 0 1 .1.3V15a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4.5a.5.5 0 0 1 .1-.3L2.95.4ZM7.5 1H3.75L1.5 4h6V1Zm1 0v3h6l-2.25-3H8.5ZM15 5H1v10h14V5Z" />
+                                    </svg>
+                                    @*<i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">المخازن</span>*@
+                                    <span class="me-4">المخازن</span>
+                                </a>
+
+                            </li>
+                            <li>
+                                <a id="Order" class="nav-link " asp-area="" asp-controller="Order" asp-action="index">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-minecart-loaded" viewBox="0 0 16 16">
+                                        <path d="M4 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm8-1a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 1a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM.115 3.18A.5.5 0 0 1 .5 3h15a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 14 12H2a.5.5 0 0 1-.491-.408l-1.5-8a.5.5 0 0 1 .106-.411zm.987.82 1.313 7h11.17l1.313-7H1.102z" />
+                                        <path fill-rule="evenodd" d="M6 1a2.498 2.498 0 0 1 4 0c.818 0 1.545.394 2 1 .67 0 1.552.57 2 1h-2c-.314 0-.611-.15-.8-.4-.274-.365-.71-.6-1.2-.6-.314 0-.611-.15-.8-.4a1.497 1.497 0 0 0-2.4 0c-.189.25-.486.4-.8.4-.507 0-.955.251-1.228.638-.09.13-.194.25-.308.362H3c.13-.147.401-.432.562-.545a1.63 1.63 0 0 0 .393-.393A2.498 2.498 0 0 1 6 1z" />
+                                    </svg>
+                                    @*<i class="fs-5 bi-speedometer2"></i><span class="ms-1 d-none d-sm-inline">الطلبات</span>*@
+                                    <span class="me-4">الطلبات</span>
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a id="store" class="nav-link " id="store" asp-area="" asp-controller="store" asp-action="Index">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-shop" viewBox="0 0 16 16">
+                                        <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
+                                    </svg>
+                                    @*<i class="fs-5 bi-grid"></i><span class="ms-1 d-none d-sm-inline">المتاجر</span>*@
+                                    <span class="me-4">المتاجر</span>
+                                </a>
+                            </li>
+                            <li>
+
+                                <a id="product" class="nav-link " asp-area="" asp-controller="product" asp-action="Index">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-layout-wtf" viewBox="0 0 16 16">
+                                        <path d="M5 1v8H1V1h4zM1 0a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H1zm13 2v5H9V2h5zM9 1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9zM5 13v2H3v-2h2zm-2-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3zm12-1v2H9v-2h6zm-6-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H9z" />
+                                    </svg>
+                                    @*<i class="fs-5 bi-people"></i><span class="ms-1 d-none d-sm-inline">المنتجات</span>*@
+                                    <span class="me-4">المنتجات</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                }
+                <div class="dropdown py-sm-4 mt-sm-auto ms-auto ms-sm-0 flex-shrink-1">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="~/image/profile.jpg" alt="hugenerd" width="28" height="28" class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1">Joe</span>
+                    </a>
+                    <partial name="_LoginPartial" />-->
+                    @*<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">New project...</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        </ul>*@
+                </div>
+                <!-- Sidebar menu ends -->
+
+            </nav>
+            <!-- Sidebar wrapper end -->
+            <!-- App container starts -->
+            <div class="app-container">
+
+                <!-- App header starts -->
+                <div class="app-header d-flex align-items-center">
+
+                    <!-- Toggle buttons start -->
+                    <div class="d-flex">
+                        <button class="btn btn-outline-primary me-2 toggle-sidebar" id="toggle-sidebar">
+                            <i class="bi bi-text-indent-left fs-5"></i>
+                        </button>
+                        <button class="btn btn-outline-primary me-2 pin-sidebar" id="pin-sidebar">
+                            <i class="bi bi-text-indent-left fs-5"></i>
+                        </button>
+                    </div>
+                    <!-- Toggle buttons end -->
+                    <!-- App brand sm start -->
+                    <div class="app-brand-sm d-md-none d-sm-block">
+                        <a href="index.html">
+                            <img src="~/assets/images/logo-sm.svg" class="logo" alt="Bootstrap Gallery">
+                        </a>
+                    </div>
+                    <!-- App brand sm end -->
+
+
+                    @*<div class="start-0">
+                        <ul class="nav">
+                            <li><a class="nav-link">Home</a></li>
+                            <li><a class="nav-link">About</a></li>
+                            <li><a class="nav-link">Test</a></li>
+                        </ul>
+                    </div>*@
+                    <!-- App header actions start -->
+                    <div class="header-actions">
+
+                        <div class="search-container d-lg-block d-none me-2">
+                            <!-- Search container start -->
+                            <input type="text" class="form-control" placeholder="Search" />
+                            <i class="bi bi-search"></i>
+                            <!-- Search container end -->
+                        </div>
+                        <div class="dropdown ms-2">
+                            <a class="dropdown-toggle d-flex p-2 border rounded-2" href="#!" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-grid fs-4 lh-1"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end shadow">
+                                <!-- Row start -->
+                                <div class="d-flex gap-2 m-2">
+                                    <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
+                                        <img src="~/assets/images/brand-behance.svg" class="img-2x" alt="Admin Themes" />
+                                    </a>
+                                    <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
+                                        <img src="~/assets/images/brand-gatsby.svg" class="img-2x" alt="Admin Themes" />
+                                    </a>
+                                    <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
+                                        <img src="~/assets/images/brand-google.svg" class="img-2x" alt="Admin Themes" />
+                                    </a>
+                                    <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
+                                        <img src="~/assets/images/brand-bitcoin.svg" class="img-2x" alt="Admin Themes" />
+                                    </a>
+                                    <a href="javascript:void(0)" class="g-col-4 p-2 border rounded-2">
+                                        <img src="~/assets/images/brand-dribbble.svg" class="img-2x" alt="Admin Themes" />
+                                    </a>
+                                </div>
+                                <!-- Row end -->
+                            </div>
+                        </div>
+                        <div class="dropdown ms-2">
+                            <a class="dropdown-toggle d-flex p-2 border rounded-2" href="#!" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-bell fs-4 lh-1"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end shadow">
+                                <div class="dropdown-item">
+                                    <div class="d-flex py-2 border-bottom">
+                                        <img src="~/assets/images/user.png" class="img-4x me-3 rounded-3"
+                                             alt="Admin Theme" />
+                                        <div class="m-0">
+                                            <h6 class="mb-1">Sophie Michiels</h6>
+                                            <p class="mb-2">Membership has been ended.</p>
+                                            <p class="small m-0 text-secondary">Today, 07:30pm</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="d-flex py-2 border-bottom">
+                                        <img src="~/assets/images/user2.png" class="img-4x me-3 rounded-3"
+                                             alt="Admin Theme" />
+                                        <div class="m-0">
+                                            <h6 class="mb-1">Sophie Michiels</h6>
+                                            <p class="mb-2">Congratulate, James for new job.</p>
+                                            <p class="small m-0 text-secondary">Oct 24, 08:00pm</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-item">
+                                    <div class="d-flex py-2">
+                                        <img src="~/assets/images/user1.png" class="img-4x me-3 rounded-3"
+                                             alt="Admin Theme" />
+                                        <div class="m-0">
+                                            <h6 class="mb-1">Sophie Michiels</h6>
+                                            <p class="mb-2">Lewis added new schedule release.</p>
+                                            <p class="small m-0 text-secondary">Oct 28, 09:30pm</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-grid m-3">
+                                    <a href="javascript:void(0)" class="btn btn-primary">View all</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown ms-2">
+                            <a href="settings.html" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               data-bs-custom-class="custom-tooltip-info" data-bs-title="Settings"
+                               class="d-flex p-2 border rounded-2">
+                                <i class="bi bi-gear fs-4 lh-1"></i>
+                            </a>
+                        </div>
+                        <div class="dropdown ms-3">
+                            <a id="userSettings"
+                               class="dropdown-toggle d-flex py-2 align-items-center ps-3 border-start" href="#!"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="d-none d-md-block me-2">@UserManager.GetUserName(User)</span>
+                                <img src="~/assets/images/user.png" class="rounded-circle img-3x"
+                                     alt="Bootstrap Gallery" />
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end shadow">
+                                @*<a class="dropdown-item d-flex align-items-center" href="profile.html">
+                                    <i class="bi bi-person fs-4 me-2"></i>Profile
+                                </a>*@
+                                <!--<a id="manage" class="dropdown-item d-flex align-items-center">-->
+                                    @*Hello @UserManager.GetUserName(User)!*@
+                                    <!--<i class="bi bi-person fs-4 me-2"></i>Profile
+                                </a>-->
+
+                                <a id="manage" class="dropdown-item d-flex align-items-center" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                                    <i class="bi bi-gear fs-4 me-2"></i>Account Settings
+                                </a>
+                                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="dropdown-item d-flex align-items-center">
+                                        <i class="bi bi-escape fs-4 me-2"></i>Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- App header actions end -->
+
+                </div>
+                <!-- App header ends -->
+                <!-- App hero header starts -->
+                <div class="app-hero-header d-flex align-items-start">
+
+                    <!-- Breadcrumb start -->
+                    <ol class="breadcrumb d-none d-lg-flex align-items-center">
+                        <li class="breadcrumb-item">
+                            <i class="bi bi-house"></i>
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">Dashboard</li>
+                    </ol>
+                    <!-- Breadcrumb end -->
+                    <!-- Sales stats start -->
+                    @*<div class="ms-auto d-flex flex-row">
+                        <div class="d-flex flex-column me-5 text-end">
+                            <p class="m-0 text-secondary">Sales</p>
+                            <h3 class="m-0">5,58,560</h3>
+                        </div>
+                        <div class="d-flex flex-column text-end">
+                            <p class="m-0 text-secondary">Income</p>
+                            <h3 class="m-0">$65,80,990</h3>
+                        </div>
+                    </div>*@
+                    <!-- Sales stats end -->
+
+                </div>
+                <!-- App Hero header ends -->
+                <!-- App body starts -->
+                <div class="app-body">
+                    @RenderBody()
+                    @*<div style="height:300px; width:3000px; background-color:red"></div>*@
+                </div>
+                <!-- App body ends -->
+                <!-- App footer start -->
+                <div class="app-footer">
+                    <span>© Bootstrap Gallery 2023</span>
+                </div>
+                <!-- App footer end -->
+
+            </div>
+            <!-- App container ends -->
+
+        </div>
+        <!-- Main container end -->
+
+    </div>
+    <!-- Page wrapper end -->
+    <!-- *************
+            ************ JavaScript Files *************
+        ************* -->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+
+    <!-- *************
+            ************ Vendor Js Files *************
+        ************* -->
+    <!-- Overlay Scroll JS -->
+    <script src="~/assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
+    <script src="~/assets/vendor/overlay-scroll/custom-scrollbar.js"></script>
+
+    <!-- Apex Charts -->
+    <script src="~/assets/vendor/apex/apexcharts.min.js"></script>
+    <script src="~/assets/vendor/apex/custom/dash1/activity-report.js"></script>
+    <script src="~/assets/vendor/apex/custom/dash1/deals.js"></script>
+    <script src="~/assets/vendor/apex/custom/dash1/sparkline.js"></script>
+    <script src="~/assets/vendor/apex/custom/dash1/sparkline2.js"></script>
+
+    <!-- Rating -->
+    <script src="~/assets/vendor/rating/raty.js"></script>
+    <script src="~/assets/vendor/rating/raty-custom.js"></script>
+
+    <!-- Custom JS files -->
+    <script src="~/assets/js/custom.js"></script>
+
+    <!--Others-->
+    <script>
+
+        $(function () {
+            var url = window.location.pathname.split("/");
+            //alert(url[1]);
+            $('#topheader .navbar-nav').find('li.active').removeClass('active');
+            $("#" + url[1]).parent('li').addClass('active');
+            $("#" + url[1]).addClass('active');
+        });
+
+    </script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/limonte-sweetalert2/sweetalert2.all.min.js"></script>
+
+    <script src="~/js/dataTable.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>
